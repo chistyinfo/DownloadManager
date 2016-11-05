@@ -12,10 +12,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,11 +25,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DownloadManager downloadManager;
 
     private long Image_DownloadId, Music_DownloadId;
+    private Intent intent;
+
+    ListView list;
+    String[] itemname ={
+            "দৈনিক প্রথমআলো",
+            "দৈনিক যুগান্তর",
+            "দৈনিক ইত্তেফাক"
+
+    };
+
+
+    Integer[] imgid={
+            R.drawable.pic1,
+            R.drawable.pic2,
+            R.drawable.pic3
+
+    };
+
+    String[] urlStrArray={"http://www.prothom-alo.com/","http://www.jugantor.com/mobile/","http://www.ittefaq.com/mobile/"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
+
+
+        CustomAdapter adapter=new CustomAdapter(this, itemname, imgid);
+        list=(ListView)findViewById(R.id.list);
+        list.setAdapter(adapter);
+
+
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String Slecteditem= itemname[+position];
+                Toast.makeText(getApplicationContext(), Slecteditem+" "+ "ডাউনলোড হচ্ছে", Toast.LENGTH_LONG).show();
+                view.setSelected(true);
+                intent.putExtra("url", urlStrArray[position]);
+                MainActivity.this.startActivity(intent);
+
+
+            }
+        });
 
 //        //Download Image from URL
 //        Button DownloadImage = (Button) findViewById(R.id.DownloadImage);

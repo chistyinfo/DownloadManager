@@ -25,6 +25,12 @@
         android:layout_height="wrap_content"
         android:text="Cancel All Downloads" />
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
